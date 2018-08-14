@@ -1,0 +1,22 @@
+{
+  "name": "@optix/vue-loader",
+  "version": "1.0.0",
+  "description": "Loader plugin for Vue applications",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/optixsolutions/vue-loader.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Rich Moore <rich@optixsolutions.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
