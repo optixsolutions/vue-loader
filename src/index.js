@@ -43,6 +43,10 @@ export default function install(Vue, options = {}) {
             options.store.commit('loader/stop', item);
         },
 
+        isLoading() {
+            return options.store.getters['loader/isLoading'];
+        },
+
         clear() {
             options.store.commit('loader/clear');
         }

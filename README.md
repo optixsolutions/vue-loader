@@ -32,6 +32,7 @@ this.$loader.start('example');
 
 * start(item)
 * stop(item)
+* isLoading() // boolean
 * clear()
 
 ## License
