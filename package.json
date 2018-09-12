@@ -3,12 +3,13 @@
   "version": "1.0.1",
   "description": "Loader plugin for Vue applications",
   "main": "src/index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test nyc mocha-webpack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js",
+    "watch": "nyc mocha-webpack --webpack-config webpack.config.js --watch --require test/setup.js test/**/*.spec.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/optixsolutions/vue-loader.git"
-  },
-  "scripts": {
-    "test": "mocha"
   },
   "author": "Rich Moore <rich@optixsolutions.co.uk>",
   "license": "MIT",
@@ -17,6 +18,27 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "@babel/core": "^7.0.0",
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-istanbul": "^5.0.1",
+    "cross-env": "^5.2.0",
+    "expect": "^23.6.0",
+    "jsdom": "^12.0.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.2.0",
+    "mocha-webpack": "^1.1.0",
+    "nyc": "^13.0.1",
+    "vue-loader": "^15.4.1",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^3.12.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.(js|vue)"
+    ],
+    "instrument": false,
+    "sourceMap": false
   }
 }

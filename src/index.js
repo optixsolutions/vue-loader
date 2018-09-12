@@ -1,9 +1,11 @@
+// import loaderStore from './store';
+
 export default function install(Vue, options = {}) {
     
     if (! options.hasOwnProperty('store')) {
         throw new Error('Please provide vuex store.');
     }
-
+    
     options.store.registerModule('loader', {
         namespaced: true,
 
