@@ -1,56 +1,48 @@
-// import loaderStore from './store';
-
 export default function install(Vue, options = {}) {
-    
-    if (! options.hasOwnProperty('store')) {
-        throw new Error('Please provide vuex store.');
-    }
-    
-    options.store.registerModule('loader', {
-        namespaced: true,
 
-        state: {
-            loading: []
+    const handler = new Vue({
+        data() {
+            return {
+                loading: []
+            }
         },
 
-        getters: {
-            isLoading: state => state.loading.length > 0
+        computed: {
+            isLoading() {
+                return this.loading.length > 0;
+            }
         },
 
-        mutations: {
-            start(state, item) {
-                state.loading.push(item);
+        methods: {
+            start(item) {
+                this.loading.push(item);
             },
-        
-            stop(state, item) {
-                let index = state.loading.indexOf(item);
-        
-                if (index != -1) {
-                    state.loading.splice(index, 1);
+
+            stop(item) {
+                if (item) {
+                    let index = this.loading.indexOf(item);
+    
+                    if (index != -1) {
+                        this.loading.splice(index, 1);
+                    }
+                } else {
+                    this.loading = [];
                 }
-            },
-        
-            clear(state) {
-                state.loading = [];
             }
         }
     });
 
     Vue.loader = {
-        start(item) {
-            options.store.commit('loader/start', item);
+        startLoading(item) {
+            handler.start(item);
         },
 
-        stop(item) {
-            options.store.commit('loader/stop', item);
+        stopLoading(item = null) {
+            handler.stop(item);
         },
 
-        isLoading() {
-            return options.store.getters['loader/isLoading'];
-        },
-
-        clear() {
-            options.store.commit('loader/clear');
+        get isLoading() {
+            return handler.isLoading;
         }
     };
 
