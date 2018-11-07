@@ -14,6 +14,7 @@
   "author": "Rich Moore <rich@optixsolutions.co.uk>",
   "license": "MIT",
   "dependencies": {
+    "matcher": "^1.1.1",
     "vue": "^2.5.17"
   },
   "devDependencies": {

@@ -1,4 +1,6 @@
-export default function install(Vue, options = {}) {
+import matcher from 'matcher';
+
+export default function install(Vue) {
 
     const handler = new Vue({
         data() {
@@ -7,23 +9,37 @@ export default function install(Vue, options = {}) {
             }
         },
 
-        computed: {
-            isLoading() {
-                return this.loading.length > 0;
-            }
-        },
-
         methods: {
+            getIndex(item) {
+                return this.loading.indexOf(item);
+            },
+
             start(item) {
                 this.loading.push(item);
             },
 
+            check(item) {
+                if (typeof item === 'string') {
+                    if (item.match(/[\*\!]/)) {
+                        return this.loading.filter(load => matcher.isMatch(load, item)).length > 0;
+                    }
+
+                    return this.loading.includes(item);
+                }
+
+                return this.loading.length > 0;
+            },
+
             stop(item) {
-                if (item) {
-                    let index = this.loading.indexOf(item);
-    
-                    if (index != -1) {
-                        this.loading.splice(index, 1);
+                if (typeof item === 'string') {
+                    if (item.match(/[\*\!]/)) {
+                        this.loading = this.loading.filter(load => ! matcher.isMatch(load, item));
+                    } else {
+                        let index = this.getIndex(item);
+        
+                        if (index !== -1) {
+                            this.loading.splice(index, 1);
+                        }
                     }
                 } else {
                     this.loading = [];
@@ -37,12 +53,12 @@ export default function install(Vue, options = {}) {
             handler.start(item);
         },
 
-        stopLoading(item = null) {
-            handler.stop(item);
+        isLoading(item = null) {
+            return handler.check(item);
         },
 
-        get isLoading() {
-            return handler.isLoading;
+        stopLoading(item = null) {
+            handler.stop(item);
         }
     };
 
